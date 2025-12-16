@@ -13,6 +13,7 @@
     "i18n": "pnpm i18n:extract --clean && po-missing -v -b locales --model  qwen3-coder:480b-cloud && pnpm i18n:compile"
   },
   "dependencies": {
+    "@garden-manager/shared": "workspace:*",
     "@formatjs/intl-locale": "^5.0.1",
     "@formatjs/intl-pluralrules": "^6.0.1",
     "@lingui/core": "^5.7.0",
