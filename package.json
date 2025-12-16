@@ -1,0 +1,20 @@
+{
+  "name": "garden-manager",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "dev:shared": "turbo run dev --filter=@garden-manager/shared",
+    "dev:backend": "turbo run dev --filter=@garden-manager/backend",
+    "dev:mobile": "turbo run dev --filter=@garden-manager/mobile",
+    "build:shared": "turbo run build --filter=@garden-manager/shared",
+    "build:backend": "turbo run build --filter=@garden-manager/backend",
+    "build:mobile": "turbo run build --filter=@garden-manager/mobile"
+  },
+  "devDependencies": {
+    "turbo": "latest",
+    "typescript": "^5.3.0"
+  },
+  "packageManager": "pnpm@10.25.0"
+}
