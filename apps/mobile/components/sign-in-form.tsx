@@ -1,4 +1,3 @@
-import { SocialConnections } from '@/components/social-connections';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -74,21 +73,18 @@ export function SignInForm() {
               <Text>Continue</Text>
             </Button>
           </View>
+          <View className="items-center">
+
           <Text className="text-center text-sm">
             Don&apos;t have an account?{' '}
+            </Text>
             <Pressable
               onPress={() => {
                 // TODO: Navigate to sign up screen
               }}>
               <Text className="text-sm underline underline-offset-4">Sign up</Text>
             </Pressable>
-          </Text>
-          <View className="flex-row items-center">
-            <Separator className="flex-1" />
-            <Text className="text-muted-foreground px-4 text-sm">or</Text>
-            <Separator className="flex-1" />
-          </View>
-          <SocialConnections />
+                </View>
         </CardContent>
       </Card>
     </View>
