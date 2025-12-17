@@ -22,10 +22,6 @@ A cross-platform mobile application built with Expo, React Native, and NativeWin
 - Android: Android Studio (for Android development)
 - **Required External Tool**: `po-missing` for AI-powered translation management
 
-I've reviewed the `po-missing` repository, and you are correct—my previous instructions were incorrect. This tool is built in Rust, not Python, and has different capabilities. Here is the refactored section for your README.
-
----
-
 ### ⚙️ Installing `po-missing`
 The mobile app's i18n workflow depends on the Rust tool `po-missing` from the repository [elcoosp/po-missing](https://github.com/elcoosp/po-missing). You must install it using Cargo.
 
