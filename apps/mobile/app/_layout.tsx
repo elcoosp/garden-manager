@@ -60,6 +60,12 @@ export default function RootLayout() {
                   title: 'Sign in',
                 }}
               />
+                      <Stack.Screen
+                name="sign-up"
+                options={{
+                  title: 'Sign up',
+                }}
+              />
               <Stack.Screen
                 name="+not-found"
                 options={{
