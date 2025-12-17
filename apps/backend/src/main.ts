@@ -1,28 +1,68 @@
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { writeFileSync } from 'node:fs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const options = new DocumentBuilder()
-    .setTitle('Garden manager')
-    .setDescription('Garden manager API')
+  // Enable CORS
+  app.enableCors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+  });
+
+  // Global validation pipe
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    })
+  );
+
+  // Swagger/OpenAPI configuration
+  const config = new DocumentBuilder()
+    .setTitle('Garden Manager API')
+    .setDescription('API documentation for Garden Manager application')
     .setVersion('1.0')
-    .addTag('auth')
-    //.addBearerAuth()
+    .addTag('Auth', 'Authentication endpoints')
+    .addTag('Garden', 'Garden management endpoints')
+    .addTag('Journal', 'Garden journal endpoints')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth' // This name here is important for matching up with @ApiBearerAuth() in your controllers
+    )
     .build();
-  const document = SwaggerModule.createDocument(app, options);
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true, // Keep authorization between page refreshes
+    },
+  });
+
   writeFileSync(
     '../mobile/swagger-spec.json',
     JSON.stringify(document, null, 2),
   );
+  
+  // Set global prefix
+  app.setGlobalPrefix('api');
 
-  SwaggerModule.setup('api', app, document);
+  const port = process.env.PORT || 3333;
+  await app.listen(port);
 
-  await app.listen(process.env.PORT ?? 3000);
-
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(`🚀 Application is running on: http://localhost:${port}/api`);
+  console.log(`📚 Swagger docs available at: http://localhost:${port}/api/docs`);
 }
+
 bootstrap();

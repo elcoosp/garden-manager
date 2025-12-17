@@ -11,24 +11,30 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiNotFoundResponse,
+  ApiForbiddenResponse,
+  ApiBearerAuth,
+  ApiParam,
+} from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthGuard } from '@nestjs/passport';
 import { JournalEntryEntity, GardenProfileEntity } from '../database/entities';
+import {
+  CreateJournalEntryDto,
+  UpdateJournalEntryDto,
+  JournalEntryResponseDto,
+  DeleteResponseDto,
+} from '../garden/garden-journal.dto';
 
-interface CreateJournalEntryDto {
-  gardenId: string;
-  date: Date;
-  notes: string;
-  photoUrl?: string;
-}
-
-interface UpdateJournalEntryDto {
-  date?: Date;
-  notes?: string;
-  photoUrl?: string;
-}
-
+@ApiTags('Journal')
+@ApiBearerAuth()
 @Controller('journal')
 @UseGuards(AuthGuard('jwt'))
 export class JournalController {
@@ -40,10 +46,20 @@ export class JournalController {
   ) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Create journal entry',
+    description: 'Create a new journal entry for a garden',
+  })
+  @ApiBody({ type: CreateJournalEntryDto })
+  @ApiCreatedResponse({
+    description: 'Journal entry created successfully',
+    type: JournalEntryResponseDto,
+  })
+  @ApiForbiddenResponse({ description: 'Garden not found or access denied' })
   async createEntry(
     @Request() req,
     @Body() dto: CreateJournalEntryDto,
-  ) {
+  ): Promise<JournalEntryResponseDto> {
     // Verify the garden belongs to the user
     const garden = await this.gardenRepository.findOne({
       where: { id: dto.gardenId, userId: req.user.id },
@@ -66,10 +82,20 @@ export class JournalController {
   }
 
   @Get('garden/:gardenId')
+  @ApiOperation({
+    summary: 'Get journal entries by garden',
+    description: 'Retrieve all journal entries for a specific garden',
+  })
+  @ApiParam({ name: 'gardenId', description: 'Garden ID' })
+  @ApiOkResponse({
+    description: 'List of journal entries',
+    type: [JournalEntryResponseDto],
+  })
+  @ApiForbiddenResponse({ description: 'Garden not found or access denied' })
   async getEntriesByGarden(
     @Request() req,
     @Param('gardenId') gardenId: string,
-  ) {
+  ): Promise<JournalEntryResponseDto[]> {
     // Verify the garden belongs to the user
     const garden = await this.gardenRepository.findOne({
       where: { id: gardenId, userId: req.user.id },
@@ -88,7 +114,21 @@ export class JournalController {
   }
 
   @Get(':id')
-  async getEntry(@Request() req, @Param('id') id: string) {
+  @ApiOperation({
+    summary: 'Get journal entry by ID',
+    description: 'Retrieve a specific journal entry',
+  })
+  @ApiParam({ name: 'id', description: 'Journal entry ID' })
+  @ApiOkResponse({
+    description: 'Journal entry details',
+    type: JournalEntryResponseDto,
+  })
+  @ApiNotFoundResponse({ description: 'Journal entry not found' })
+  @ApiForbiddenResponse({ description: 'Access denied' })
+  async getEntry(
+    @Request() req,
+    @Param('id') id: string,
+  ): Promise<JournalEntryResponseDto> {
     const entry = await this.journalRepository.findOne({
       where: { id },
       relations: ['garden'],
@@ -111,11 +151,23 @@ export class JournalController {
   }
 
   @Put(':id')
+  @ApiOperation({
+    summary: 'Update journal entry',
+    description: 'Update an existing journal entry',
+  })
+  @ApiParam({ name: 'id', description: 'Journal entry ID' })
+  @ApiBody({ type: UpdateJournalEntryDto })
+  @ApiOkResponse({
+    description: 'Journal entry updated successfully',
+    type: JournalEntryResponseDto,
+  })
+  @ApiNotFoundResponse({ description: 'Journal entry not found' })
+  @ApiForbiddenResponse({ description: 'Access denied' })
   async updateEntry(
     @Request() req,
     @Param('id') id: string,
     @Body() dto: UpdateJournalEntryDto,
-  ) {
+  ): Promise<JournalEntryResponseDto> {
     const entry = await this.journalRepository.findOne({
       where: { id },
     });
@@ -144,7 +196,21 @@ export class JournalController {
   }
 
   @Delete(':id')
-  async deleteEntry(@Request() req, @Param('id') id: string) {
+  @ApiOperation({
+    summary: 'Delete journal entry',
+    description: 'Delete a journal entry',
+  })
+  @ApiParam({ name: 'id', description: 'Journal entry ID' })
+  @ApiOkResponse({
+    description: 'Journal entry deleted successfully',
+    type: DeleteResponseDto,
+  })
+  @ApiNotFoundResponse({ description: 'Journal entry not found' })
+  @ApiForbiddenResponse({ description: 'Access denied' })
+  async deleteEntry(
+    @Request() req,
+    @Param('id') id: string,
+  ): Promise<DeleteResponseDto> {
     const entry = await this.journalRepository.findOne({
       where: { id },
     });
