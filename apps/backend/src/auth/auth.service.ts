@@ -4,7 +4,10 @@ import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RegisterDto, LoginDto, AuthResponse } from '@garden-manager/shared';
+import {
+  AuthResponse
+} from './auth.resp';
+import type {RegisterDto, LoginDto} from './auth.dto'
 import { UserEntity } from 'src/database/entities';
 
 @Injectable()

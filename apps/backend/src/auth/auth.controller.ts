@@ -11,15 +11,23 @@ import { AuthService } from './auth.service';
 import type {
   RegisterDto,
   LoginDto,
-  AuthResponse,
+} from "./auth.dto"
+import {
   User,
-} from '@garden-manager/shared';
+  AuthResponse
+} from './auth.resp';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
+@ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: AuthResponse,
+  })
   @Post('register')
   async register(@Body() dto: RegisterDto): Promise<AuthResponse> {
     return this.authService.register(dto);
