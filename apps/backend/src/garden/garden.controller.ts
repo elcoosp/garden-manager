@@ -65,7 +65,6 @@ export class GardenController {
     // Generate the planting plan using AI
     const plantingPlan = await this.ollamaService.generatePlantingPlan({
       ...profile,
-      userId: req.user.id,
     });
 
     // Create and save garden profile with the generated plan
