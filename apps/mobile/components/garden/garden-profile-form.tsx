@@ -159,7 +159,7 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
           </View>
 
           <View className="pt-4 space-y-4">
-            <Button onPress={handleSave}>
+            <Button onPress={handleSave} className='mb-2'>
               <Text>Save Profile</Text>
             </Button>
             {onDelete && (
