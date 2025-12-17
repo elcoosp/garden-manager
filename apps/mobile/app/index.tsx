@@ -39,7 +39,7 @@ export default function Screen() {
               resizeMode="contain" 
             />
             <Text className="text-3xl font-bold text-center">
-              Garden Planner
+              Garden Manager
             </Text>
             <Text className="text-gray-600 text-center text-lg">
               Plan, grow, and manage your perfect garden

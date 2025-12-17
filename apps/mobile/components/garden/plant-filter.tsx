@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View } from 'react-native';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar';
@@ -20,29 +21,38 @@ export function PlantFilter({
   onSeasonChange,
   seasons,
 }: PlantFilterProps) {
+  const [menuValue, setMenuValue] = useState<string>(selectedType || 'all');
+
   const plantTypes = [
-    { label: 'All Types', value: null },
+    { label: 'All Types', value: 'all' },
     { label: 'Vegetables', value: 'vegetable' },
     { label: 'Herbs', value: 'herb' },
     { label: 'Flowers', value: 'flower' },
   ];
 
+  const handleTypeChange = (value: string|undefined) => {
+    if(value !== undefined){
+
+      setMenuValue(value);
+      onTypeChange(value === 'all' ? null : value);
+    }
+  };
+
   return (
     <View className="flex-row items-center gap-4 mb-4">
-      <Menubar>
-        <MenubarMenu>
+      <Menubar value={menuValue} onValueChange={handleTypeChange}>
+        <MenubarMenu value={menuValue}>
           <MenubarTrigger>
             <View className="flex-row items-center">
               <Filter size={16} className="mr-2" />
-              <Text>Type: {plantTypes.find(t => t.value === selectedType)?.label || 'All'}</Text>
+              <Text>Type: {plantTypes.find(t => t.value === menuValue)?.label || 'All'}</Text>
               <ChevronDown size={16} className="ml-2" />
             </View>
           </MenubarTrigger>
           <MenubarContent>
             {plantTypes.map((type) => (
               <MenubarItem
-                key={type.value || 'all'}
-                onSelect={() => onTypeChange(type.value)}
+                key={type.value}
               >
                 <Text>{type.label}</Text>
               </MenubarItem>

@@ -8,13 +8,17 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Toggle } from '@/components/ui/toggle';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { GardenProfile } from '@garden-manager/shared';
 
-import {GardenProfile} from '@garden-manager/shared'
 interface GardenProfileFormProps {
   profile: GardenProfile;
   onSave: (profile: GardenProfile) => void;
   onDelete?: () => void;
 }
+
+type ExperienceLevel = 'beginner' | 'intermediate' | 'expert';
+type GardenSize = 'small' | 'medium' | 'large';
+
 
 export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFormProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -30,6 +34,29 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
     'Educational',
     'Aesthetic Design',
   ];
+
+  const experienceLevelOptions = [
+    { label: 'Beginner', value: 'beginner' },
+    { label: 'Intermediate', value: 'intermediate' },
+    { label: 'Expert', value: 'expert' },
+  ];
+
+  const sunlightHoursOptions = [
+    { label: 'Less than 4 hours', value: '2' },
+    { label: '4-6 hours', value: '5' },
+    { label: '6-8 hours', value: '7' },
+    { label: 'More than 8 hours', value: '9' },
+  ];
+
+  // Get current experience level option
+  const currentExperienceLevelOption = experienceLevelOptions.find(
+    opt => opt.value === formData.experienceLevel
+  ) || experienceLevelOptions[0];
+
+  // Get current sunlight hours option
+  const currentSunlightHoursOption = sunlightHoursOptions.find(
+    opt => opt.value === formData.sunlightHours.toString()
+  ) || sunlightHoursOptions[0];
 
   const handleGoalToggle = (goal: string) => {
     setSelectedGoals((prev) =>
@@ -59,9 +86,9 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
             <Text className="font-medium">Garden Size</Text>
             <RadioGroup
               value={formData.gardenSize}
-              onValueChange={(value: 'small' | 'medium' | 'large') =>
-                setFormData({ ...formData, gardenSize: value })
-              }
+              onValueChange={(value: string) => {
+                setFormData({ ...formData, gardenSize: value as GardenSize });
+              }}
               className="space-y-2"
             >
               <View className="flex-row items-center space-x-2">
@@ -82,66 +109,65 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
           <View className="space-y-4">
             <Text className="font-medium">Experience Level</Text>
             <Select
-              value={formData.experienceLevel}
-              onValueChange={(value: 'beginner' | 'intermediate' | 'expert') =>
-                setFormData({ ...formData, experienceLevel: value })
-              }
-              items={[
-                { label: 'Beginner', value: 'beginner' },
-                { label: 'Intermediate', value: 'intermediate' },
-                { label: 'Expert', value: 'expert' },
-              ]}
+              value={currentExperienceLevelOption}
+              onValueChange={(option) => {
+                setFormData({ 
+                  ...formData, 
+                  experienceLevel: option?.value as ExperienceLevel 
+                });
+              }}
             />
           </View>
 
           <View className="space-y-4">
             <Text className="font-medium">Sunlight Hours</Text>
             <Select
-              value={formData.sunlightHours.toString()}
-              onValueChange={(value) =>
-                setFormData({ ...formData, sunlightHours: parseInt(value) })
-              }
-              items={[
-                { label: 'Less than 4 hours', value: '2' },
-                { label: '4-6 hours', value: '5' },
-                { label: '6-8 hours', value: '7' },
-                { label: 'More than 8 hours', value: '9' },
-              ]}
+              value={currentSunlightHoursOption}
+              onValueChange={(option) => {
+                setFormData({ 
+                  ...formData, 
+                  sunlightHours: option?.value ? parseInt(option?.value) : 0
+                });
+              }}
             />
           </View>
 
           <View className="space-y-4">
             <Text className="font-medium">Garden Goals</Text>
             <View className="flex-row flex-wrap gap-3">
-              {gardenGoals.map((goal) => (
-                <Toggle
-                  key={goal}
-                  pressed={selectedGoals.includes(goal)}
-                  onPressedChange={() => handleGoalToggle(goal)}
-                  className="mb-2"
-                >
-                  <View className="flex-row items-center">
-                    <Checkbox
-                      checked={selectedGoals.includes(goal)}
-                      className="mr-2"
-                    />
-                    <Text className="text-sm">{goal}</Text>
-                  </View>
-                </Toggle>
-              ))}
+              {gardenGoals.map((goal) => {
+                const isSelected = selectedGoals.includes(goal);
+                return (
+                  <Toggle
+                    key={goal}
+                    pressed={isSelected}
+                    onPressedChange={() => handleGoalToggle(goal)}
+                    className="mb-2"
+                  >
+                    <View className="flex-row items-center">
+                      <Checkbox
+                        checked={isSelected}
+                        onCheckedChange={() => handleGoalToggle(goal)}
+                        className="mr-2"
+                      />
+                      <Text className="text-sm">{goal}</Text>
+                    </View>
+                  </Toggle>
+                );
+              })}
             </View>
           </View>
 
           <View className="pt-4 space-y-4">
-            <Button onPress={handleSave}><Text>Save Profile</Text></Button>
+            <Button onPress={handleSave}>
+              <Text>Save Profile</Text>
+            </Button>
             {onDelete && (
               <Button
                 variant="destructive"
                 onPress={() => setIsDeleteDialogOpen(true)}
               >
-                <Text>
-                Delete Profile
-                </Text>
+                <Text>Delete Profile</Text>
               </Button>
             )}
           </View>
@@ -157,9 +183,9 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel><Text>Cancel</Text></AlertDialogCancel>
             <AlertDialogAction onPress={onDelete}>
-              Delete
+              <Text>Delete</Text>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
