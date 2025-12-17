@@ -22,7 +22,9 @@ export function PlantCard({ plant, onAddToPlan }: PlantCardProps) {
           <View>
             <CardTitle className="text-xl">{plant.name}</CardTitle>
             <Badge variant="outline" className="mt-2">
+              <Text>
               {plant.type}
+              </Text>
             </Badge>
           </View>
           <Button
@@ -42,7 +44,9 @@ export function PlantCard({ plant, onAddToPlan }: PlantCardProps) {
           <View className="flex-row flex-wrap gap-2">
             {plant.plantingSeason.map((season) => (
               <Badge key={season} variant="secondary">
+                <Text>
                 {season}
+                </Text>
               </Badge>
             ))}
           </View>
@@ -77,7 +81,9 @@ export function PlantCard({ plant, onAddToPlan }: PlantCardProps) {
             <View className="flex-row flex-wrap gap-2">
               {plant.companionPlants.map((companion) => (
                 <Badge key={companion} variant="outline">
+                  <Text>
                   {companion}
+                  </Text>
                 </Badge>
               ))}
             </View>

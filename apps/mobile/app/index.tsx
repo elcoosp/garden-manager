@@ -13,7 +13,7 @@ const LOGO = {
 };
 
 const SCREEN_OPTIONS = {
-  title: 'Garden Planner',
+  title: 'Garden Manager',
   headerTransparent: true,
   headerRight: () => <ThemeToggle />,
 };
