@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
 import { Link } from 'expo-router';
 import * as React from 'react';
-import { Pressable, type TextInput, View } from 'react-native';
+import { type TextInput, View } from 'react-native';
 
 export function SignInForm() {
   const passwordInputRef = React.useRef<TextInput>(null);

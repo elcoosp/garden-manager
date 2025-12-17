@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, useRouter } from 'expo-router';
 import { MoonStarIcon, StarIcon, SunIcon, SproutIcon, FlowerIcon, UserIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
-import { Image, type ImageStyle, View, ScrollView } from 'react-native';
+import { Image, type ImageStyle, View, ScrollView, Pressable } from 'react-native';
 
 const LOGO = {
   light: require('@/assets/images/react-native-reusables-light.png'),
@@ -25,7 +25,7 @@ const IMAGE_STYLE: ImageStyle = {
 
 export default function Screen() {
   const { colorScheme } = useColorScheme();
-
+const router= useRouter()
   return (
     <>
       <Stack.Screen options={SCREEN_OPTIONS} />
@@ -46,12 +46,12 @@ export default function Screen() {
             </Text>
           </View>
 
-      {/* Quick Actions */}
+       {/* Quick Actions */}
           <View className="w-full gap-4">
             <Text className="text-xl font-semibold text-gray-900">Quick Actions</Text>
             
             <View className="gap-3">
-              <Link href="/garden/plan" asChild>
+              <Pressable onPress={() => router.push('/garden/plan')}>
                 <View className="bg-white p-4 rounded-xl border border-gray-200">
                   <View className="flex-row items-center gap-4">
                     <View className="bg-green-100 p-3 rounded-full">
@@ -65,9 +65,9 @@ export default function Screen() {
                     </View>
                   </View>
                 </View>
-              </Link>
+              </Pressable>
 
-              <Link href="/garden/profile" asChild>
+              <Pressable onPress={() => router.push('/garden/profile')}>
                 <View className="bg-white p-4 rounded-xl border border-gray-200">
                   <View className="flex-row items-center gap-4">
                     <View className="bg-blue-100 p-3 rounded-full">
@@ -81,7 +81,7 @@ export default function Screen() {
                     </View>
                   </View>
                 </View>
-              </Link>
+              </Pressable>
             </View>
           </View>
           {/* Features Grid */}
