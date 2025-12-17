@@ -33,7 +33,9 @@ export function PlantCard({ plant, onAddToPlan }: PlantCardProps) {
             onPress={() => onAddToPlan?.(plant)}
             className="px-3"
           >
+            <Text>
             Add
+            </Text>
           </Button>
         </View>
       </CardHeader>
@@ -93,7 +95,9 @@ export function PlantCard({ plant, onAddToPlan }: PlantCardProps) {
       
       <CardFooter className="border-t border-gray-200 pt-4">
         <Button variant="ghost" size="sm" className="w-full">
+          <Text>
           View Details
+          </Text>
         </Button>
       </CardFooter>
     </Card>

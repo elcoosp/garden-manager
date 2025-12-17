@@ -139,7 +139,9 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
                 variant="destructive"
                 onPress={() => setIsDeleteDialogOpen(true)}
               >
+                <Text>
                 Delete Profile
+                </Text>
               </Button>
             )}
           </View>
