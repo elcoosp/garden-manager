@@ -1,6 +1,6 @@
 import { SignUpForm } from '@/components/sign-up-form';
 import { ScrollView, View } from 'react-native';
- 
+
 export default function SignUpScreen() {
   return (
     <ScrollView

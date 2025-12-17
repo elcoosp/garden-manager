@@ -13,9 +13,9 @@
     "i18n": "pnpm i18n:extract --clean && po-missing -v -b locales --model  qwen3-coder:480b-cloud && pnpm i18n:compile"
   },
   "dependencies": {
-    "@garden-manager/shared": "workspace:*",
     "@formatjs/intl-locale": "^5.0.1",
     "@formatjs/intl-pluralrules": "^6.0.1",
+    "@garden-manager/shared": "workspace:*",
     "@lingui/core": "^5.7.0",
     "@lingui/react": "^5.7.0",
     "@react-navigation/native": "^7.1.25",
@@ -37,13 +37,14 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-gesture-handler": "^2.29.1",
+    "react-native-css-interop": "^0.2.1",
+    "react-native-gesture-handler": "^2.28.0",
     "react-native-reanimated": "~4.1.6",
     "react-native-safe-area-context": "~5.6.2",
     "react-native-screens": "~4.16.0",
-    "react-native-svg": "15.15.1",
+    "react-native-svg": "15.12.1",
     "react-native-web": "^0.21.2",
-    "react-native-worklets": "0.5.2",
+    "react-native-worklets": "0.5.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^3.4.19",
     "tailwindcss-animate": "^1.0.7"
@@ -51,7 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@lingui/cli": "^5.7.0",
-    "@types/react": "~19.2.7",
+    "@types/react": "~19.1.10",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "typescript": "~5.9.3"

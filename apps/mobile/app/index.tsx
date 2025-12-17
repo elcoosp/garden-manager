@@ -32,11 +32,16 @@ export default function Screen() {
       <View className="flex-1 items-center justify-center gap-8 p-4">
         <Image source={LOGO[colorScheme ?? 'light']} style={IMAGE_STYLE} resizeMode="contain" />
         <View className="flex-row flex-wrap justify-center gap-2">
-          <Link href="/sign-in" asChild>
-            <Button>
+          <Button>
+            <Link href="/sign-in" asChild>
               <Text>Sign In</Text>
-            </Button>
-          </Link>
+            </Link>
+          </Button>
+          <Button>
+            <Link href="/sign-up" asChild>
+              <Text>Sign Up</Text>
+            </Link>
+          </Button>
         </View>
       </View>
     </>

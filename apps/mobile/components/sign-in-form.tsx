@@ -1,14 +1,9 @@
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
+import { Link } from 'expo-router';
 import * as React from 'react';
 import { Pressable, type TextInput, View } from 'react-native';
 
@@ -25,7 +20,7 @@ export function SignInForm() {
 
   return (
     <View className="gap-6">
-      <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5">
+      <Card className="border-border/0 shadow-none sm:border-border sm:shadow-sm sm:shadow-black/5">
         <CardHeader>
           <CardTitle className="text-center text-xl sm:text-left">Sign in to your app</CardTitle>
           <CardDescription className="text-center sm:text-left">
@@ -53,7 +48,7 @@ export function SignInForm() {
                 <Button
                   variant="link"
                   size="sm"
-                  className="web:h-fit ml-auto h-4 px-1 py-0 sm:h-4"
+                  className="ml-auto h-4 px-1 py-0 web:h-fit sm:h-4"
                   onPress={() => {
                     // TODO: Navigate to forgot password screen
                   }}>
@@ -73,17 +68,11 @@ export function SignInForm() {
             </Button>
           </View>
           <View className="items-center">
-
-          <Text className="text-center text-sm">
-            Don&apos;t have an account?{' '}
-            </Text>
-            <Pressable
-              onPress={() => {
-                // TODO: Navigate to sign up screen
-              }}>
-              <Text className="text-sm underline underline-offset-4">Sign up</Text>
-            </Pressable>
-                </View>
+            <Text className="text-center text-sm">Don&apos;t have an account? </Text>
+              <Link href="/sign-up" asChild className="text-sm underline underline-offset-4">
+                <Text>Sign Up</Text>
+              </Link>
+          </View>
         </CardContent>
       </Card>
     </View>
