@@ -51,9 +51,12 @@ export class UserEntity {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  resetToken?: string;
+
+  @Column({ nullable: true })
+  resetTokenExpiry?: Date;
+
   @CreateDateColumn()
   createdAt: Date;
-
-  @Column({ default: true })
-  isActive: boolean;
 }
