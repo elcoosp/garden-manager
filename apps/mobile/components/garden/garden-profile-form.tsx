@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Pressable } from 'react-native';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
@@ -91,18 +91,27 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
               }}
               className="space-y-2"
             >
-              <View className="flex-row items-center space-x-2">
+              <Pressable 
+                className="flex-row items-center space-x-2 py-2"
+                onPress={() => setFormData({ ...formData, gardenSize: 'small' })}
+              >
                 <RadioGroupItem value="small" id="small" />
-                <Text>Small (under 100 sq ft)</Text>
-              </View>
-              <View className="flex-row items-center space-x-2">
+                <Text className='ml-1'>Small (under 100 sq ft)</Text>
+              </Pressable>
+              <Pressable 
+                className="flex-row items-center space-x-2 py-2"
+                onPress={() => setFormData({ ...formData, gardenSize: 'medium' })}
+              >
                 <RadioGroupItem value="medium" id="medium" />
-                <Text>Medium (100-500 sq ft)</Text>
-              </View>
-              <View className="flex-row items-center space-x-2">
+                <Text className='ml-1'>Medium (100-500 sq ft)</Text>
+              </Pressable>
+              <Pressable 
+                className="flex-row items-center space-x-2 py-2"
+                onPress={() => setFormData({ ...formData, gardenSize: 'large' })}
+              >
                 <RadioGroupItem value="large" id="large" />
-                <Text>Large (over 500 sq ft)</Text>
-              </View>
+                <Text className='ml-1'>Large (over 500 sq ft)</Text>
+              </Pressable>
             </RadioGroup>
           </View>
 
@@ -159,7 +168,7 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
           </View>
 
           <View className="pt-4 space-y-4">
-            <Button onPress={handleSave} className='mb-2'>
+            <Button onPress={handleSave}>
               <Text>Save Profile</Text>
             </Button>
             {onDelete && (
