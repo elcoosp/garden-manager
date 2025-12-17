@@ -46,45 +46,44 @@ export default function Screen() {
             </Text>
           </View>
 
-          {/* Quick Actions */}
+      {/* Quick Actions */}
           <View className="w-full gap-4">
-            <Text className="text-xl font-semibold">Quick Actions</Text>
+            <Text className="text-xl font-semibold text-gray-900">Quick Actions</Text>
             
             <View className="gap-3">
               <Link href="/garden/plan" asChild>
-                <Button className="w-full flex-row justify-start p-6" variant="outline">
+                <View className="bg-white p-4 rounded-xl border border-gray-200">
                   <View className="flex-row items-center gap-4">
                     <View className="bg-green-100 p-3 rounded-full">
                       <SproutIcon size={24} color="#10b981" />
                     </View>
                     <View className="flex-1">
-                      <Text className="text-lg font-semibold">Planting Plan</Text>
-                      <Text className="text-gray-600">
+                      <Text className="text-lg font-semibold text-gray-900">Planting Plan</Text>
+                      <Text className="text-sm text-gray-600">
                         View and customize your planting schedule
                       </Text>
                     </View>
                   </View>
-                </Button>
+                </View>
               </Link>
 
               <Link href="/garden/profile" asChild>
-                <Button className="w-full flex-row justify-start p-6" variant="outline">
+                <View className="bg-white p-4 rounded-xl border border-gray-200">
                   <View className="flex-row items-center gap-4">
                     <View className="bg-blue-100 p-3 rounded-full">
                       <UserIcon size={24} color="#3b82f6" />
                     </View>
                     <View className="flex-1">
-                      <Text className="text-lg font-semibold">Garden Profile</Text>
-                      <Text className="text-gray-600">
+                      <Text className="text-lg font-semibold text-gray-900">Garden Profile</Text>
+                      <Text className="text-sm text-gray-600">
                         Update your garden settings and preferences
                       </Text>
                     </View>
                   </View>
-                </Button>
+                </View>
               </Link>
             </View>
           </View>
-
           {/* Features Grid */}
           <View className="w-full gap-4">
             <Text className="text-xl font-semibold">Features</Text>
