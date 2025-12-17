@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class GardenProfile {
+export class GardenProfileEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -24,7 +24,7 @@ export class GardenProfile {
 }
 
 @Entity()
-export class JournalEntry {
+export class JournalEntryEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
