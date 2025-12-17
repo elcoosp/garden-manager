@@ -165,22 +165,442 @@
           "auth"
         ]
       }
+    },
+    "/garden/plan": {
+      "post": {
+        "description": "Generate an AI-powered planting plan based on garden profile and save it to the database",
+        "operationId": "GardenController_generatePlan",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGardenPlanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Planting plan generated and saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GardenPlanResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Generate planting plan",
+        "tags": [
+          "Garden"
+        ]
+      }
+    },
+    "/garden/profiles": {
+      "get": {
+        "description": "Retrieve all garden profiles for the authenticated user",
+        "operationId": "GardenController_getProfiles",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of garden profiles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GardenProfileResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all garden profiles",
+        "tags": [
+          "Garden"
+        ]
+      }
+    },
+    "/garden/profiles/{id}": {
+      "get": {
+        "description": "Retrieve a specific garden profile by its ID",
+        "operationId": "GardenController_getProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Garden profile ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Garden profile details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GardenProfileResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Garden profile not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get garden profile by ID",
+        "tags": [
+          "Garden"
+        ]
+      }
+    },
+    "/garden/diagnose": {
+      "post": {
+        "description": "Use AI to diagnose plant problems based on description and optional image",
+        "operationId": "GardenController_diagnose",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiagnosePlantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Plant diagnosis completed and saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiagnosisResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Diagnose plant issues",
+        "tags": [
+          "Garden"
+        ]
+      }
+    },
+    "/garden/diagnoses": {
+      "get": {
+        "description": "Retrieve all plant diagnoses for the authenticated user",
+        "operationId": "GardenController_getDiagnoses",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of plant diagnoses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiagnosisListItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all plant diagnoses",
+        "tags": [
+          "Garden"
+        ]
+      }
+    },
+    "/journal": {
+      "post": {
+        "description": "Create a new journal entry for a garden",
+        "operationId": "JournalController_createEntry",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateJournalEntryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Journal entry created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JournalEntryResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Garden not found or access denied"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create journal entry",
+        "tags": [
+          "Journal"
+        ]
+      }
+    },
+    "/journal/garden/{gardenId}": {
+      "get": {
+        "description": "Retrieve all journal entries for a specific garden",
+        "operationId": "JournalController_getEntriesByGarden",
+        "parameters": [
+          {
+            "name": "gardenId",
+            "required": true,
+            "in": "path",
+            "description": "Garden ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of journal entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JournalEntryResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Garden not found or access denied"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get journal entries by garden",
+        "tags": [
+          "Journal"
+        ]
+      }
+    },
+    "/journal/{id}": {
+      "get": {
+        "description": "Retrieve a specific journal entry",
+        "operationId": "JournalController_getEntry",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Journal entry ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Journal entry details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JournalEntryResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Journal entry not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get journal entry by ID",
+        "tags": [
+          "Journal"
+        ]
+      },
+      "put": {
+        "description": "Update an existing journal entry",
+        "operationId": "JournalController_updateEntry",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Journal entry ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateJournalEntryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Journal entry updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JournalEntryResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Journal entry not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update journal entry",
+        "tags": [
+          "Journal"
+        ]
+      },
+      "delete": {
+        "description": "Delete a journal entry",
+        "operationId": "JournalController_deleteEntry",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Journal entry ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Journal entry deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Journal entry not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete journal entry",
+        "tags": [
+          "Journal"
+        ]
+      }
     }
   },
   "info": {
-    "title": "Garden manager",
-    "description": "Garden manager API",
+    "title": "Garden Manager API",
+    "description": "API documentation for Garden Manager application",
     "version": "1.0",
     "contact": {}
   },
   "tags": [
     {
-      "name": "auth",
-      "description": ""
+      "name": "Auth",
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "Garden",
+      "description": "Garden management endpoints"
+    },
+    {
+      "name": "Journal",
+      "description": "Garden journal endpoints"
     }
   ],
   "servers": [],
   "components": {
+    "securitySchemes": {
+      "JWT-auth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "name": "JWT",
+        "description": "Enter JWT token",
+        "in": "header"
+      }
+    },
     "schemas": {
       "RegisterDto": {
         "type": "object",
@@ -294,6 +714,317 @@
         "required": [
           "token",
           "newPassword"
+        ]
+      },
+      "CreateGardenPlanDto": {
+        "type": "object",
+        "properties": {
+          "zipCode": {
+            "type": "string",
+            "description": "ZIP code for location-based recommendations",
+            "example": "90210"
+          },
+          "gardenSize": {
+            "type": "string",
+            "description": "Size of the garden",
+            "enum": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "example": "medium"
+          },
+          "sunlightHours": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 24,
+            "description": "Average daily sunlight hours",
+            "example": 6
+          },
+          "experienceLevel": {
+            "type": "string",
+            "description": "Gardener experience level",
+            "enum": [
+              "beginner",
+              "intermediate",
+              "expert"
+            ],
+            "example": "beginner"
+          },
+          "goals": {
+            "description": "Garden goals and preferences",
+            "example": [
+              "grow vegetables",
+              "attract pollinators"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "zipCode",
+          "gardenSize",
+          "sunlightHours",
+          "experienceLevel",
+          "goals"
+        ]
+      },
+      "GardenPlanResponseDto": {
+        "type": "object",
+        "properties": {
+          "gardenId": {
+            "type": "string",
+            "description": "Unique garden profile ID",
+            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          },
+          "plantingPlan": {
+            "type": "object",
+            "description": "Generated planting plan with recommendations"
+          }
+        },
+        "required": [
+          "gardenId",
+          "plantingPlan"
+        ]
+      },
+      "GardenProfileResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          },
+          "userId": {
+            "type": "string",
+            "example": "u9i8o7p6-q5w4-3e2r-1t0y-9u8i7o6p5q4w"
+          },
+          "zipCode": {
+            "type": "string",
+            "example": "90210"
+          },
+          "gardenSize": {
+            "type": "string",
+            "example": "medium"
+          },
+          "sunlightHours": {
+            "type": "number",
+            "example": 6
+          },
+          "experienceLevel": {
+            "type": "string",
+            "example": "beginner"
+          },
+          "goals": {
+            "example": [
+              "grow vegetables",
+              "attract pollinators"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "plantingPlan": {
+            "type": "object",
+            "nullable": true,
+            "description": "Full planting plan object"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "zipCode",
+          "gardenSize",
+          "sunlightHours",
+          "experienceLevel",
+          "goals",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "DiagnosePlantDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description of plant issue or question",
+            "example": "My tomato plant leaves are turning yellow"
+          },
+          "image": {
+            "type": "string",
+            "description": "Base64 encoded image or URL",
+            "example": "data:image/jpeg;base64,/9j/4AAQSkZJRg..."
+          }
+        },
+        "required": [
+          "description"
+        ]
+      },
+      "DiagnosisResponseDto": {
+        "type": "object",
+        "properties": {
+          "diagnosisId": {
+            "type": "string",
+            "description": "Unique diagnosis ID",
+            "example": "d1a2g3n4-o5s6-7i8s-9abc-def123456789"
+          },
+          "diagnosis": {
+            "type": "object",
+            "description": "AI-generated diagnosis and recommendations"
+          }
+        },
+        "required": [
+          "diagnosisId",
+          "diagnosis"
+        ]
+      },
+      "DiagnosisListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "d1a2g3n4-o5s6-7i8s-9abc-def123456789"
+          },
+          "description": {
+            "type": "string",
+            "example": "My tomato plant leaves are turning yellow"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://example.com/image.jpg"
+          },
+          "diagnosis": {
+            "type": "object",
+            "description": "Diagnosis result object"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "diagnosis",
+          "createdAt"
+        ]
+      },
+      "CreateJournalEntryDto": {
+        "type": "object",
+        "properties": {
+          "gardenId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Garden profile ID",
+            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Entry date",
+            "example": "2024-03-15T10:30:00Z"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Journal entry notes",
+            "example": "Planted tomatoes in the north bed. Watered all plants."
+          },
+          "photoUrl": {
+            "type": "string",
+            "description": "Photo URL or base64 encoded image",
+            "example": "https://example.com/garden-photo.jpg"
+          }
+        },
+        "required": [
+          "gardenId",
+          "date",
+          "notes"
+        ]
+      },
+      "JournalEntryResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "j1o2u3r4-n5a6-7l8e-9ntry-abc123456789"
+          },
+          "gardenId": {
+            "type": "string",
+            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-03-15T10:30:00Z"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Planted tomatoes in the north bed. Watered all plants."
+          },
+          "photoUrl": {
+            "type": "string",
+            "example": "https://example.com/garden-photo.jpg"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "gardenId",
+          "date",
+          "notes",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateJournalEntryDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Updated entry date",
+            "example": "2024-03-15T10:30:00Z"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Updated notes",
+            "example": "Planted tomatoes and peppers. Watered all plants thoroughly."
+          },
+          "photoUrl": {
+            "type": "string",
+            "description": "Updated photo URL",
+            "example": "https://example.com/updated-photo.jpg"
+          }
+        }
+      },
+      "DeleteResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message",
+            "example": "Journal entry deleted successfully"
+          }
+        },
+        "required": [
+          "message"
         ]
       }
     }
