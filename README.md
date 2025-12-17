@@ -178,31 +178,6 @@ The backend uses SQLite for simplicity. Migrations are handled by TypeORM synchr
 - Mobile: Uses `po-missing` with Qwen3-Coder model for translations
 - Backend: Integrates with Ollama for garden management AI features
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **po-missing not found**
-   - Ensure Python 3.8+ is installed
-   - Verify `pip install po-missing` completed successfully
-   - Check PATH includes Python scripts directory
-
-2. **Expo build issues**
-   - Clear cache: `pnpm dev -c`
-   - Reset: `pnpm clean && pnpm install`
-
-3. **Native module errors**
-   - Reinstall pods: `cd ios && pod install`
-   - Rebuild native modules
-
 ## 📄 License
 
 UNLICENSED - Proprietary software
-
-## 👥 Contributors
-
-- Add your team members here
-
----
-
-**Note**: This is a monorepo managed with pnpm workspaces. Use `pnpm -F @garden-manager/mobile` or `pnpm -F @garden-manager/backend` to run commands in specific packages from the root.
