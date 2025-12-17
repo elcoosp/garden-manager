@@ -8,7 +8,9 @@ export class OllamaService {
   private readonly model = process.env.OLLAMA_MODEL || 'llama3.1';
   private readonly host = process.env.OLLAMA_HOST || 'http://localhost:11434';
 
-  async generatePlantingPlan(profile: Omit<GardenProfile, "id">): Promise<PlantingPlan> {
+  async generatePlantingPlan(
+    profile: Omit<GardenProfile, 'id'>,
+  ): Promise<PlantingPlan> {
     const prompt = `
       As an expert organic gardener, create a planting plan for:
       - USDA Zone: ${profile.zipCode}

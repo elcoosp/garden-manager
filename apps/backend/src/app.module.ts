@@ -13,9 +13,9 @@ import { UserEntity } from './database/entities';
   imports: [
     TypeOrmModule.forRoot({
       type: 'better-sqlite3',
-      database: process.env.DATABASE_URL || "garden-manager.db", 
+      database: process.env.DATABASE_URL || 'garden-manager.db',
       entities: [UserEntity],
-      synchronize: process.env.NODE_ENV !== 'production', 
+      synchronize: process.env.NODE_ENV !== 'production',
       logging: process.env.NODE_ENV === 'development',
     }),
     TypeOrmModule.forFeature([UserEntity]),

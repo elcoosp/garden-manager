@@ -1,4 +1,3 @@
-// apps/backend/src/auth/auth.controller.ts
 import {
   Controller,
   Post,
@@ -12,21 +11,22 @@ import {
   RegisterDto,
   LoginDto,
   ForgotPasswordDto,
-  ResetPasswordDto
-} from "./auth.dto"
-import {
-  User,
-  AuthResponse,
-  MessageResponse
-} from './auth.resp';
+  ResetPasswordDto,
+} from './auth.dto';
+import { User, AuthResponse, MessageResponse } from './auth.resp';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-  
+
   @ApiCreatedResponse({
     description: 'The user has been successfully created.',
     type: AuthResponse,
@@ -36,7 +36,7 @@ export class AuthController {
   async register(@Body() dto: RegisterDto): Promise<AuthResponse> {
     return this.authService.register(dto);
   }
-  
+
   @ApiCreatedResponse({
     description: 'User logged in successfully.',
     type: AuthResponse,
@@ -53,7 +53,9 @@ export class AuthController {
   })
   @Post('forgot-password')
   @ApiBody({ type: ForgotPasswordDto })
-  async forgotPassword(@Body() dto: ForgotPasswordDto): Promise<MessageResponse> {
+  async forgotPassword(
+    @Body() dto: ForgotPasswordDto,
+  ): Promise<MessageResponse> {
     return this.authService.forgotPassword(dto);
   }
 

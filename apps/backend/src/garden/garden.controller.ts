@@ -1,4 +1,3 @@
-// apps/backend/src/garden/garden.controller.ts
 import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
 import { OllamaService } from '../ai/ollama.service';
 import { GardenProfile } from '@garden-manager/shared';
@@ -15,7 +14,7 @@ export class GardenController {
     @Body() profile: Omit<GardenProfile, 'id' | 'userId'>,
   ) {
     // Associate garden with user
-    const gardenProfile: Omit<GardenProfile, "id"> = {
+    const gardenProfile: Omit<GardenProfile, 'id'> = {
       ...profile,
       userId: req.user.id,
     };

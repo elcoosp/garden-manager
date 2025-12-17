@@ -1,12 +1,12 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterDto {
   @ApiProperty()
   email: string;
-  
+
   @ApiProperty()
   password: string;
-  
+
   @ApiProperty()
   name: string;
 }
@@ -14,7 +14,7 @@ export class RegisterDto {
 export class LoginDto {
   @ApiProperty()
   email: string;
-  
+
   @ApiProperty()
   password: string;
 }
@@ -27,7 +27,7 @@ export class ForgotPasswordDto {
 export class ResetPasswordDto {
   @ApiProperty()
   token: string;
-  
+
   @ApiProperty()
   newPassword: string;
 }

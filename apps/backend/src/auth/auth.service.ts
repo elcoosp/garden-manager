@@ -1,20 +1,16 @@
-// apps/backend/src/auth/auth.service.ts
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
 import { Repository, MoreThan } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { randomBytes } from 'crypto';
-import {
-  AuthResponse,
-  MessageResponse
-} from './auth.resp';
+import { AuthResponse, MessageResponse } from './auth.resp';
 import type {
   RegisterDto,
   LoginDto,
   ForgotPasswordDto,
-  ResetPasswordDto
-} from './auth.dto'
+  ResetPasswordDto,
+} from './auth.dto';
 import { UserEntity } from 'src/database/entities';
 
 // You'll need to create this entity or add fields to UserEntity
@@ -92,7 +88,10 @@ export class AuthService {
 
     if (!user) {
       // Don't reveal that the user doesn't exist for security reasons
-      return { message: 'If your email exists in our system, you will receive a password reset link.' };
+      return {
+        message:
+          'If your email exists in our system, you will receive a password reset link.',
+      };
     }
 
     // Generate a reset token (valid for 1 hour)
@@ -107,10 +106,13 @@ export class AuthService {
     // In a real application, you would send an email here
     // For now, we'll log the token for testing
     console.log(`Password reset token for ${user.email}: ${resetToken}`);
-    console.log(`Reset link: http://yourapp.com/reset-password?token=${resetToken}`);
+    console.log(
+      `Reset link: http://yourapp.com/reset-password?token=${resetToken}`,
+    );
 
-    return { 
-      message: 'If your email exists in our system, you will receive a password reset link.' 
+    return {
+      message:
+        'If your email exists in our system, you will receive a password reset link.',
     };
   }
 
@@ -129,18 +131,21 @@ export class AuthService {
 
     // Hash the new password
     const passwordHash = await hash(dto.newPassword, 10);
-    
+
     // Update password and clear reset token
     user.passwordHash = passwordHash;
     user.resetToken = undefined;
     user.resetTokenExpiry = undefined;
-    
+
     await this.usersRepository.save(user);
 
-    return { message: 'Password has been successfully reset. You can now login with your new password.' };
+    return {
+      message:
+        'Password has been successfully reset. You can now login with your new password.',
+    };
   }
 
-  async validateUser(userId: string): Promise<UserEntity|null> {
+  async validateUser(userId: string): Promise<UserEntity | null> {
     return this.usersRepository.findOne({ where: { id: userId } });
   }
 }

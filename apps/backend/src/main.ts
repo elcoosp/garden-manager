@@ -10,12 +10,15 @@ async function bootstrap() {
     .setTitle('Garden manager')
     .setDescription('Garden manager API')
     .setVersion('1.0')
-    .addTag("auth")
+    .addTag('auth')
     //.addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  writeFileSync('../mobile/swagger-spec.json', JSON.stringify(document, null, 2));
- 
+  writeFileSync(
+    '../mobile/swagger-spec.json',
+    JSON.stringify(document, null, 2),
+  );
+
   SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT ?? 3000);
