@@ -15,12 +15,12 @@ export default function GardenProfileScreen() {
   };
 
   return (
-      <View className="flex-1 p-4">
-        <GardenProfileForm
-          profile={sampleGardenProfile}
-          onSave={handleSaveProfile}
-          onDelete={handleDeleteProfile}
-        />
-      </View>
+    <View className="flex-1 p-4">
+      <GardenProfileForm
+        profile={sampleGardenProfile}
+        onSave={handleSaveProfile}
+        onDelete={handleDeleteProfile}
+      />
+    </View>
   );
 }

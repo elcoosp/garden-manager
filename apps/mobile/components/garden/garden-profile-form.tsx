@@ -7,7 +7,16 @@ import { Select } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Toggle } from '@/components/ui/toggle';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { GardenProfile } from '@garden-manager/shared';
 
 interface GardenProfileFormProps {
@@ -18,7 +27,6 @@ interface GardenProfileFormProps {
 
 type ExperienceLevel = 'beginner' | 'intermediate' | 'expert';
 type GardenSize = 'small' | 'medium' | 'large';
-
 
 export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFormProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -49,20 +57,18 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
   ];
 
   // Get current experience level option
-  const currentExperienceLevelOption = experienceLevelOptions.find(
-    opt => opt.value === formData.experienceLevel
-  ) || experienceLevelOptions[0];
+  const currentExperienceLevelOption =
+    experienceLevelOptions.find((opt) => opt.value === formData.experienceLevel) ||
+    experienceLevelOptions[0];
 
   // Get current sunlight hours option
-  const currentSunlightHoursOption = sunlightHoursOptions.find(
-    opt => opt.value === formData.sunlightHours.toString()
-  ) || sunlightHoursOptions[0];
+  const currentSunlightHoursOption =
+    sunlightHoursOptions.find((opt) => opt.value === formData.sunlightHours.toString()) ||
+    sunlightHoursOptions[0];
 
   const handleGoalToggle = (goal: string) => {
     setSelectedGoals((prev) =>
-      prev.includes(goal)
-        ? prev.filter((g) => g !== goal)
-        : [...prev, goal]
+      prev.includes(goal) ? prev.filter((g) => g !== goal) : [...prev, goal]
     );
   };
 
@@ -80,7 +86,7 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
           <CardTitle>Garden Profile</CardTitle>
           <CardDescription>Customize your garden settings</CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           <View className="space-y-4">
             <Text className="font-medium">Garden Size</Text>
@@ -89,28 +95,24 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
               onValueChange={(value: string) => {
                 setFormData({ ...formData, gardenSize: value as GardenSize });
               }}
-              className="space-y-2"
-            >
-              <Pressable 
+              className="space-y-2">
+              <Pressable
                 className="flex-row items-center space-x-2 py-2"
-                onPress={() => setFormData({ ...formData, gardenSize: 'small' })}
-              >
+                onPress={() => setFormData({ ...formData, gardenSize: 'small' })}>
                 <RadioGroupItem value="small" id="small" />
-                <Text className='ml-1'>Small (under 100 sq ft)</Text>
+                <Text className="ml-1">Small (under 100 sq ft)</Text>
               </Pressable>
-              <Pressable 
+              <Pressable
                 className="flex-row items-center space-x-2 py-2"
-                onPress={() => setFormData({ ...formData, gardenSize: 'medium' })}
-              >
+                onPress={() => setFormData({ ...formData, gardenSize: 'medium' })}>
                 <RadioGroupItem value="medium" id="medium" />
-                <Text className='ml-1'>Medium (100-500 sq ft)</Text>
+                <Text className="ml-1">Medium (100-500 sq ft)</Text>
               </Pressable>
-              <Pressable 
+              <Pressable
                 className="flex-row items-center space-x-2 py-2"
-                onPress={() => setFormData({ ...formData, gardenSize: 'large' })}
-              >
+                onPress={() => setFormData({ ...formData, gardenSize: 'large' })}>
                 <RadioGroupItem value="large" id="large" />
-                <Text className='ml-1'>Large (over 500 sq ft)</Text>
+                <Text className="ml-1">Large (over 500 sq ft)</Text>
               </Pressable>
             </RadioGroup>
           </View>
@@ -120,9 +122,9 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
             <Select
               value={currentExperienceLevelOption}
               onValueChange={(option) => {
-                setFormData({ 
-                  ...formData, 
-                  experienceLevel: option?.value as ExperienceLevel 
+                setFormData({
+                  ...formData,
+                  experienceLevel: option?.value as ExperienceLevel,
                 });
               }}
             />
@@ -133,9 +135,9 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
             <Select
               value={currentSunlightHoursOption}
               onValueChange={(option) => {
-                setFormData({ 
-                  ...formData, 
-                  sunlightHours: option?.value ? parseInt(option?.value) : 0
+                setFormData({
+                  ...formData,
+                  sunlightHours: option?.value ? parseInt(option?.value) : 0,
                 });
               }}
             />
@@ -151,8 +153,7 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
                     key={goal}
                     pressed={isSelected}
                     onPressedChange={() => handleGoalToggle(goal)}
-                    className="mb-2"
-                  >
+                    className="mb-2">
                     <View className="flex-row items-center">
                       <Checkbox
                         checked={isSelected}
@@ -167,16 +168,15 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
             </View>
           </View>
 
-          <View className="pt-4 space-y-4">
+          <View className="space-y-4 pt-4">
             <Button onPress={handleSave}>
               <Text>Save Profile</Text>
             </Button>
             {onDelete && (
               <Button
-                className='mt-2'
+                className="mt-2"
                 variant="destructive"
-                onPress={() => setIsDeleteDialogOpen(true)}
-              >
+                onPress={() => setIsDeleteDialogOpen(true)}>
                 <Text>Delete Profile</Text>
               </Button>
             )}
@@ -193,7 +193,9 @@ export function GardenProfileForm({ profile, onSave, onDelete }: GardenProfileFo
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel><Text>Cancel</Text></AlertDialogCancel>
+            <AlertDialogCancel>
+              <Text>Cancel</Text>
+            </AlertDialogCancel>
             <AlertDialogAction onPress={onDelete}>
               <Text>Delete</Text>
             </AlertDialogAction>

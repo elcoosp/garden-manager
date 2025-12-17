@@ -7,6 +7,7 @@
     "android": "expo start -c --android",
     "ios": "expo start -c --ios",
     "web": "expo start -c --web",
+    "openapi:gen": "pnpm dlx openapicmd typegen --client ./swagger-spec.json > lib/openapi.d.ts",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .expo node_modules",
     "i18n:extract": "lingui extract",
@@ -16,9 +17,10 @@
   "dependencies": {
     "@formatjs/intl-locale": "^5.0.1",
     "@formatjs/intl-pluralrules": "^6.0.1",
-    "@garden-manager/shared": "workspace:*",
+    "@hookform/resolvers": "^5.2.2",
     "@lingui/core": "^5.7.0",
     "@lingui/react": "^5.7.0",
+    "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/native": "^7.1.25",
     "@rn-primitives/accordion": "^1.2.0",
     "@rn-primitives/alert-dialog": "^1.2.0",
@@ -34,6 +36,7 @@
     "@rn-primitives/slot": "^1.2.0",
     "@rn-primitives/toggle": "^1.2.0",
     "@rn-primitives/tooltip": "^1.2.0",
+    "@tanstack/react-query": "^5.90.12",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "expo": "~54.0.29",
@@ -45,8 +48,10 @@
     "expo-system-ui": "~6.0.9",
     "lucide-react-native": "^0.561.0",
     "nativewind": "^4.2.1",
+    "openapi-client-axios": "^7.8.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-hook-form": "^7.68.0",
     "react-native": "0.81.5",
     "react-native-css-interop": "^0.2.1",
     "react-native-gesture-handler": "^2.28.0",
@@ -58,7 +63,8 @@
     "react-native-worklets": "0.5.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^3.4.19",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",

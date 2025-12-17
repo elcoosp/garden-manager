@@ -3,20 +3,47 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import * as React from 'react';
-import { type TextInput, View } from 'react-native';
+import { type TextInput, View, Alert } from 'react-native';
+import { useLogin } from '@/lib/api-hooks'; // Adjust the import path
+import { useForm, Controller } from 'react-hook-form';
+import type { LoginDto } from '@/lib/openapi'; // Adjust the import path
 
 export function SignInForm() {
   const passwordInputRef = React.useRef<TextInput>(null);
+  const router = useRouter();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginDto>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const { mutate: loginUser, isPending } = useLogin();
 
   function onEmailSubmitEditing() {
     passwordInputRef.current?.focus();
   }
 
-  function onSubmit() {
-    // TODO: Submit form and navigate to protected screen if successful
-  }
+  const onSubmit = (data: LoginDto) => {
+    loginUser(data, {
+      onSuccess: (response) => {
+        console.log('Login successful:', response);
+        router.replace('/');
+      },
+      onError: (error: any) => {
+        Alert.alert(
+          'Login Failed',
+          error.response?.data?.message || 'Invalid email or password. Please try again.'
+        );
+      },
+    });
+  };
 
   return (
     <View className="gap-6">
@@ -29,19 +56,39 @@ export function SignInForm() {
         </CardHeader>
         <CardContent className="gap-6">
           <View className="gap-6">
+            {/* Email Field */}
             <View className="gap-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                placeholder="m@example.com"
-                keyboardType="email-address"
-                autoComplete="email"
-                autoCapitalize="none"
-                onSubmitEditing={onEmailSubmitEditing}
-                returnKeyType="next"
-                submitBehavior="submit"
+              <Controller
+                control={control}
+                name="email"
+                rules={{
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address',
+                  },
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Input
+                    id="email"
+                    placeholder="m@example.com"
+                    keyboardType="email-address"
+                    autoComplete="email"
+                    autoCapitalize="none"
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    onSubmitEditing={onEmailSubmitEditing}
+                    returnKeyType="next"
+                    submitBehavior="submit"
+                  />
+                )}
               />
+              {errors.email && <Text className="text-sm text-red-500">{errors.email.message}</Text>}
             </View>
+
+            {/* Password Field */}
             <View className="gap-1.5">
               <View className="flex-row items-center">
                 <Label htmlFor="password">Password</Label>
@@ -51,27 +98,42 @@ export function SignInForm() {
                   className="ml-auto h-4 px-1 py-0 web:h-fit sm:h-4"
                   onPress={() => {
                     // TODO: Navigate to forgot password screen
+                    router.push('/forgot-password');
                   }}>
                   <Text className="font-normal leading-4">Forgot your password?</Text>
                 </Button>
               </View>
-              <Input
-                ref={passwordInputRef}
-                id="password"
-                secureTextEntry
-                returnKeyType="send"
-                onSubmitEditing={onSubmit}
+              <Controller
+                control={control}
+                name="password"
+                rules={{ required: 'Password is required' }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Input
+                    ref={passwordInputRef}
+                    id="password"
+                    secureTextEntry
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    returnKeyType="send"
+                    onSubmitEditing={handleSubmit(onSubmit)}
+                  />
+                )}
               />
+              {errors.password && (
+                <Text className="text-sm text-red-500">{errors.password.message}</Text>
+              )}
             </View>
-            <Button className="w-full" onPress={onSubmit}>
-              <Text>Continue</Text>
+
+            <Button className="w-full" onPress={handleSubmit(onSubmit)} disabled={isPending}>
+              <Text>{isPending ? 'Signing in...' : 'Continue'}</Text>
             </Button>
           </View>
           <View className="items-center">
             <Text className="text-center text-sm">Don&apos;t have an account? </Text>
-              <Link href="/sign-up" asChild className="text-sm underline underline-offset-4">
-                <Text>Sign Up</Text>
-              </Link>
+            <Link href="/sign-up" asChild className="text-sm underline underline-offset-4">
+              <Text>Sign Up</Text>
+            </Link>
           </View>
         </CardContent>
       </Card>

@@ -1,4 +1,9 @@
-import { PlantRecommendation, MonthlyTask, PlantingPlan, GardenProfile } from '@garden-manager/shared';
+import {
+  PlantRecommendation,
+  MonthlyTask,
+  PlantingPlan,
+  GardenProfile,
+} from '@garden-manager/shared';
 
 export const samplePlants: PlantRecommendation[] = [
   {

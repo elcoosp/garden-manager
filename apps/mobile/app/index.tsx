@@ -2,7 +2,14 @@ import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Link, Stack, useRouter } from 'expo-router';
-import { MoonStarIcon, StarIcon, SunIcon, SproutIcon, FlowerIcon, UserIcon } from 'lucide-react-native';
+import {
+  MoonStarIcon,
+  StarIcon,
+  SunIcon,
+  SproutIcon,
+  FlowerIcon,
+  UserIcon,
+} from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 import { Image, type ImageStyle, View, ScrollView, Pressable } from 'react-native';
@@ -25,36 +32,30 @@ const IMAGE_STYLE: ImageStyle = {
 
 export default function Screen() {
   const { colorScheme } = useColorScheme();
-const router= useRouter()
+  const router = useRouter();
   return (
     <>
       <Stack.Screen options={SCREEN_OPTIONS} />
       <ScrollView className="flex-1 bg-gray-50">
-        <View className="flex-1 items-center p-6 gap-8">
+        <View className="flex-1 items-center gap-8 p-6">
           {/* Hero Section */}
           <View className="items-center gap-4">
-            <Image 
-              source={LOGO[colorScheme ?? 'light']} 
-              style={IMAGE_STYLE} 
-              resizeMode="contain" 
-            />
-            <Text className="text-3xl font-bold text-center">
-              Garden Manager
-            </Text>
-            <Text className="text-gray-600 text-center text-lg">
+            <Image source={LOGO[colorScheme ?? 'light']} style={IMAGE_STYLE} resizeMode="contain" />
+            <Text className="text-center text-3xl font-bold">Garden Manager</Text>
+            <Text className="text-center text-lg text-gray-600">
               Plan, grow, and manage your perfect garden
             </Text>
           </View>
 
-       {/* Quick Actions */}
+          {/* Quick Actions */}
           <View className="w-full gap-4">
             <Text className="text-xl font-semibold text-gray-900">Quick Actions</Text>
-            
+
             <View className="gap-3">
               <Pressable onPress={() => router.push('/garden/plan')}>
-                <View className="bg-white p-4 rounded-xl border border-gray-200">
+                <View className="rounded-xl border border-gray-200 bg-white p-4">
                   <View className="flex-row items-center gap-4">
-                    <View className="bg-green-100 p-3 rounded-full">
+                    <View className="rounded-full bg-green-100 p-3">
                       <SproutIcon size={24} color="#10b981" />
                     </View>
                     <View className="flex-1">
@@ -68,9 +69,9 @@ const router= useRouter()
               </Pressable>
 
               <Pressable onPress={() => router.push('/garden/profile')}>
-                <View className="bg-white p-4 rounded-xl border border-gray-200">
+                <View className="rounded-xl border border-gray-200 bg-white p-4">
                   <View className="flex-row items-center gap-4">
-                    <View className="bg-blue-100 p-3 rounded-full">
+                    <View className="rounded-full bg-blue-100 p-3">
                       <UserIcon size={24} color="#3b82f6" />
                     </View>
                     <View className="flex-1">
@@ -87,23 +88,21 @@ const router= useRouter()
           {/* Features Grid */}
           <View className="w-full gap-4">
             <Text className="text-xl font-semibold">Features</Text>
-            
+
             <View className="flex-row flex-wrap gap-4">
-              <View className="flex-1 min-w-[48%] bg-white p-4 rounded-xl border border-gray-200">
-                <View className="bg-amber-100 p-3 rounded-full w-12 h-12 items-center justify-center mb-3">
+              <View className="min-w-[48%] flex-1 rounded-xl border border-gray-200 bg-white p-4">
+                <View className="mb-3 h-12 w-12 items-center justify-center rounded-full bg-amber-100 p-3">
                   <FlowerIcon size={20} color="#f59e0b" />
                 </View>
-                <Text className="font-semibold mb-1">Plant Library</Text>
-                <Text className="text-sm text-gray-600">
-                  Browse vegetables, herbs, and flowers
-                </Text>
+                <Text className="mb-1 font-semibold">Plant Library</Text>
+                <Text className="text-sm text-gray-600">Browse vegetables, herbs, and flowers</Text>
               </View>
 
-              <View className="flex-1 min-w-[48%] bg-white p-4 rounded-xl border border-gray-200">
-                <View className="bg-purple-100 p-3 rounded-full w-12 h-12 items-center justify-center mb-3">
+              <View className="min-w-[48%] flex-1 rounded-xl border border-gray-200 bg-white p-4">
+                <View className="mb-3 h-12 w-12 items-center justify-center rounded-full bg-purple-100 p-3">
                   <StarIcon size={20} color="#8b5cf6" />
                 </View>
-                <Text className="font-semibold mb-1">Companion Planting</Text>
+                <Text className="mb-1 font-semibold">Companion Planting</Text>
                 <Text className="text-sm text-gray-600">
                   Discover plants that grow well together
                 </Text>
@@ -116,12 +115,12 @@ const router= useRouter()
             <Text className="text-xl font-semibold">Get Started</Text>
             <View className="flex-row flex-wrap justify-center gap-3">
               <Link href="/sign-in" asChild>
-                <Button className="flex-1 min-w-[120px]">
+                <Button className="min-w-[120px] flex-1">
                   <Text>Sign In</Text>
                 </Button>
               </Link>
               <Link href="/sign-up" asChild>
-                <Button variant="outline" className="flex-1 min-w-[120px]">
+                <Button variant="outline" className="min-w-[120px] flex-1">
                   <Text>Sign Up</Text>
                 </Button>
               </Link>
@@ -131,8 +130,8 @@ const router= useRouter()
           {/* Recent Activity Placeholder */}
           <View className="w-full gap-4">
             <Text className="text-xl font-semibold">Recent Activity</Text>
-            <View className="bg-white p-4 rounded-xl border border-gray-200">
-              <Text className="text-gray-600 text-center">
+            <View className="rounded-xl border border-gray-200 bg-white p-4">
+              <Text className="text-center text-gray-600">
                 No recent activity. Start planning your garden!
               </Text>
             </View>

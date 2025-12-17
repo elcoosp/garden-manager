@@ -12,9 +12,7 @@ export default function PlantingPlanScreen() {
   const [selectedSeason, setSelectedSeason] = useState<string | null>('Spring');
 
   const filteredPlants = selectedType
-    ? samplePlantingPlan.recommendations.filter(
-        (plant) => plant.type === selectedType
-      )
+    ? samplePlantingPlan.recommendations.filter((plant) => plant.type === selectedType)
     : samplePlantingPlan.recommendations;
 
   const handleAddToPlan = (plant: PlantRecommendation) => {
@@ -28,38 +26,34 @@ export default function PlantingPlanScreen() {
   };
 
   return (
-      <ScrollView className="flex-1">
-        <View className="p-4">
-          <Text className="text-2xl font-bold mb-2">Spring Planting Plan</Text>
-          <Text className="text-gray-600 mb-6">
-            Your personalized planting guide for {samplePlantingPlan.season}
-          </Text>
+    <ScrollView className="flex-1">
+      <View className="p-4">
+        <Text className="mb-2 text-2xl font-bold">Spring Planting Plan</Text>
+        <Text className="mb-6 text-gray-600">
+          Your personalized planting guide for {samplePlantingPlan.season}
+        </Text>
 
-          <PlantFilter
-            selectedType={selectedType}
-            onTypeChange={setSelectedType}
-            selectedSeason={selectedSeason}
-            onSeasonChange={setSelectedSeason}
-            seasons={allSeasons}
-          />
+        <PlantFilter
+          selectedType={selectedType}
+          onTypeChange={setSelectedType}
+          selectedSeason={selectedSeason}
+          onSeasonChange={setSelectedSeason}
+          seasons={allSeasons}
+        />
 
-          <Text className="text-xl font-semibold mb-4">Recommended Plants</Text>
-          <View className="mb-8">
-            {filteredPlants.map((plant) => (
-              <PlantCard
-                key={plant.name}
-                plant={plant}
-                onAddToPlan={handleAddToPlan}
-              />
-            ))}
-          </View>
-
-          <Text className="text-xl font-semibold mb-4">Monthly Tasks</Text>
-          <MonthlyTaskAccordion
-            tasks={samplePlantingPlan.plantingCalendar}
-            onTaskToggle={handleTaskToggle}
-          />
+        <Text className="mb-4 text-xl font-semibold">Recommended Plants</Text>
+        <View className="mb-8">
+          {filteredPlants.map((plant) => (
+            <PlantCard key={plant.name} plant={plant} onAddToPlan={handleAddToPlan} />
+          ))}
         </View>
-      </ScrollView>
+
+        <Text className="mb-4 text-xl font-semibold">Monthly Tasks</Text>
+        <MonthlyTaskAccordion
+          tasks={samplePlantingPlan.plantingCalendar}
+          onTaskToggle={handleTaskToggle}
+        />
+      </View>
+    </ScrollView>
   );
 }

@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -16,15 +21,17 @@ export function MonthlyTaskAccordion({ tasks, onTaskToggle }: MonthlyTaskAccordi
   const [checkedTasks, setCheckedTasks] = useState<Record<string, boolean[]>>({});
 
   const handleTaskToggle = (month: string, taskIndex: number) => {
-    const monthTasks = checkedTasks[month] || Array(tasks.find(t => t.month === month)?.tasks.length || 0).fill(false);
+    const monthTasks =
+      checkedTasks[month] ||
+      Array(tasks.find((t) => t.month === month)?.tasks.length || 0).fill(false);
     const newChecked = [...monthTasks];
     newChecked[taskIndex] = !newChecked[taskIndex];
-    
+
     setCheckedTasks({
       ...checkedTasks,
-      [month]: newChecked
+      [month]: newChecked,
     });
-    
+
     onTaskToggle?.(month, taskIndex);
   };
 
