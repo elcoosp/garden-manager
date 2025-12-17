@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import { GardenProfileForm } from '@/components/garden/garden-profile-form';
 import { sampleGardenProfile } from '@/data/sample-data';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { GardenProfile } from '@garden-manager/shared';
 
 export default function GardenProfileScreen() {
@@ -16,7 +15,6 @@ export default function GardenProfileScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
       <View className="flex-1 p-4">
         <GardenProfileForm
           profile={sampleGardenProfile}
@@ -24,6 +22,5 @@ export default function GardenProfileScreen() {
           onDelete={handleDeleteProfile}
         />
       </View>
-    </SafeAreaView>
   );
 }

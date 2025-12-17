@@ -5,7 +5,6 @@ import { PlantCard } from '@/components/garden/plant-card';
 import { MonthlyTaskAccordion } from '@/components/garden/monthly-task-accordion';
 import { PlantFilter } from '@/components/garden/plant-filter';
 import { samplePlantingPlan, allSeasons } from '@/data/sample-data';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { PlantRecommendation } from '@garden-manager/shared';
 
 export default function PlantingPlanScreen() {
@@ -29,7 +28,6 @@ export default function PlantingPlanScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
       <ScrollView className="flex-1">
         <View className="p-4">
           <Text className="text-2xl font-bold mb-2">Spring Planting Plan</Text>
@@ -63,6 +61,5 @@ export default function PlantingPlanScreen() {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 }
