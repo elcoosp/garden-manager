@@ -66,6 +66,19 @@ export default function RootLayout() {
                   title: 'Sign up',
                 }}
               />
+              {/* Garden Screens */}
+              <Stack.Screen
+                name="garden/profile"
+                options={{
+                  title: 'Garden Profile',
+                }}
+              />
+              <Stack.Screen
+                name="garden/plan"
+                options={{
+                  title: 'Planting Plan',
+                }}
+              />
               <Stack.Screen
                 name="+not-found"
                 options={{
