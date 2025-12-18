@@ -5,6 +5,9 @@ import { TokenStorage } from '@/lib/token-storage';
 
 const api = new OpenAPIClientAxios({
   definition: './swagger-spec.json',
+  withServer: {
+    url: "https://urethroscopic-earnestine-unburnished.ngrok-free.dev/api/"
+  }
 });
 
 export const updateApiToken = async (authResponse: {
